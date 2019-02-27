@@ -33,7 +33,7 @@ def upload_file():
         try:
             prob, is_same = compare(full_path_1, full_path_2)
             elapsed = time.time() - start
-            message = '两张照片是否同一个人: {}, 置信度: {}, 时间: {} 秒。'.format(is_same, prob, elapsed)
+            message = '两张照片是否同一个人: {}, 同人置信度: {}, 时间: {} 秒。'.format(is_same, prob, elapsed)
         except FaceNotFoundError as err:
             message = '对不起，[{}] 图片中没有检测到人类的脸。'.format(err)
 
