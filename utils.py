@@ -94,6 +94,19 @@ def select_central_face(im_size, bounding_boxes):
     return nearest_index
 
 
+def draw_bboxes(img, bounding_boxes, facial_landmarks=[]):
+    for b in bounding_boxes:
+        cv.rectangle(img, (int(b[0]), int(b[1])), (int(b[2]), int(b[3])), (255, 255, 255), 1)
+
+    for p in facial_landmarks:
+        for i in range(5):
+            cv.circle(img, (int(p[i]), int(p[i + 5])), 1, (0, 255, 0), -1)
+
+        break  # only first
+
+    return img
+
+
 def get_image(filename):
     has_face, bboxes, landmarks = get_face_all_attributes(filename)
     if not has_face:
@@ -103,6 +116,11 @@ def get_image(filename):
     img = transforms.ToPILImage()(img)
     img = transformer(img)
     img = img.to(device)
+
+    pic = cv.imread(filename)
+    pic = draw_bboxes(pic, bboxes, landmarks)
+    cv.imwrite(filename, pic)
+
     return img
 
 
@@ -140,7 +158,7 @@ def get_prob(theta):
     from scipy.stats import norm
     prob_0 = norm.pdf(theta, mu_0, sigma_0)
     prob_1 = norm.pdf(theta, mu_1, sigma_1)
-    return prob_1/(prob_0 + prob_1)
+    return prob_1 / (prob_0 + prob_1)
 
 
 def ensure_folder(folder):
