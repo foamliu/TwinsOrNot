@@ -1,9 +1,9 @@
 # flask_web/app.py
 import time
-
+import os
 from flask import Flask
 from flask import render_template, request
-
+from werkzeug.utils import secure_filename
 from utils import compare, ensure_folder
 
 app = Flask(__name__)
@@ -21,10 +21,14 @@ def upload_file():
             start = time.time()
             ensure_folder('static')
             file1 = request.files['file1']
-            file1.save('static/img0.png')
+            filename_1 = secure_filename(file1.filename)
+            filename_1 = os.path.join('static', filename_1)
+            file1.save(filename_1)
             file2 = request.files['file2']
-            file2.save('static/img1.png')
-            theta, is_same = compare('static/img0.png', 'static/img1.png')
+            filename_2 = secure_filename(file1.filename)
+            filename_2 = os.path.join('static', filename_2)
+            file2.save(filename_2)
+            theta, is_same = compare(filename_1, filename_2)
             elapsed = time.time() - start
             message = '两张照片是否同一个人: {}, 角度: {}, 时间: {} 秒。'.format(is_same, theta, elapsed)
         except ValueError:
@@ -33,4 +37,4 @@ def upload_file():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=6006)
+    app.run(host='0.0.0.0', port=6006, threaded=True)
