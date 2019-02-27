@@ -32,7 +32,7 @@ def upload_file():
             elapsed = time.time() - start
             message = '两张照片是否同一个人: {}, 角度: {}, 时间: {} 秒。'.format(is_same, theta, elapsed)
         except FaceNotFoundError as err:
-            message = '对不起，此图片中没有检测到人类的脸: {}'.format(err)
+            message = '对不起，[{}] 图片中没有检测到人类的脸。'.format(err)
         return render_template('show.html', message=message)
 
 
