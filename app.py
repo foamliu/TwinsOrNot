@@ -20,7 +20,7 @@ def upload_file():
         file2 = request.files['file2']
         file2.save('static/img1.png')
         theta, is_same = compare('static/img0.png', 'static/img1.png')
-        message = 'theta: {}, are same person: {}'.format(theta, is_same)
+        message = 'theta: {}, two photos are same person: {}'.format(theta, is_same)
         return render_template('show.html', message=message)
 
 
