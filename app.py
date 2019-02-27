@@ -1,6 +1,9 @@
 # flask_web/app.py
+import time
+
 from flask import Flask
 from flask import render_template, request
+
 from utils import compare, ensure_folder
 
 app = Flask(__name__)
@@ -14,13 +17,15 @@ def upload():
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        start = time.time()
         ensure_folder('static')
         file1 = request.files['file1']
         file1.save('static/img0.png')
         file2 = request.files['file2']
         file2.save('static/img1.png')
         theta, is_same = compare('static/img0.png', 'static/img1.png')
-        message = 'theta: {}, two photos are same person: {}'.format(theta, is_same)
+        elapsed = time.time() - start
+        message = 'two photos are same person: {}, theta: {}, elapsed: {} seconds'.format(is_same, theta, elapsed)
         return render_template('show.html', message=message)
 
 
