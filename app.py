@@ -25,7 +25,7 @@ def upload_file():
         file2.save('static/img1.png')
         theta, is_same = compare('static/img0.png', 'static/img1.png')
         elapsed = time.time() - start
-        message = 'two photos are same person: {}, theta: {}, elapsed: {} seconds'.format(is_same, theta, elapsed)
+        message = '两张照片是同一人: {}, 角度: {}, 时间: {} 秒。'.format(is_same, theta, elapsed)
         return render_template('show.html', message=message)
 
 
