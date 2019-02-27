@@ -127,7 +127,20 @@ def compare(fn_0, fn_1):
         theta = theta * 180 / math.pi
 
     print('theta: ' + str(theta))
-    return theta, theta < threshold
+    prob = get_prob(theta)
+    print('prob: ' + str(prob))
+    return prob, theta < threshold
+
+
+def get_prob(theta):
+    mu_0 = 89.6058
+    sigma_0 = 4.5451
+    mu_1 = 43.5357
+    sigma_1 = 8.83
+    from scipy.stats import norm
+    prob_0 = norm.cdf(theta, mu_0, sigma_0)
+    prob_1 = norm.cdf(theta, mu_1, sigma_1)
+    return prob_1/(prob_0 + prob_1)
 
 
 def ensure_folder(folder):

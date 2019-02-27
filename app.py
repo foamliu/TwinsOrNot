@@ -31,9 +31,9 @@ def upload_file():
         file2.save(full_path_2)
 
         try:
-            theta, is_same = compare(full_path_1, full_path_2)
+            prob, is_same = compare(full_path_1, full_path_2)
             elapsed = time.time() - start
-            message = '两张照片是否同一个人: {}, 角度: {}, 时间: {} 秒。'.format(is_same, theta, elapsed)
+            message = '两张照片是否同一个人: {}, 置信度: {}, 时间: {} 秒。'.format(is_same, prob, elapsed)
         except FaceNotFoundError as err:
             message = '对不起，[{}] 图片中没有检测到人类的脸。'.format(err)
 
