@@ -124,6 +124,7 @@ def get_image(filename):
     img = transformer(img)
     img = img.to(device)
 
+    print('drawing bboxes: {}'.format(filename))
     pic = cv.imread(filename)
     pic = draw_bboxes(pic, bboxes, landmarks)
     cv.imwrite(filename, pic)
