@@ -14,11 +14,15 @@
         <td>图片2：</td>
     </tr>
     <tr>
-        <td width="500" height="500"><img src="{{ url_for('static', filename = filename_1) }}" style="max-height: 500px; max-width: 500px;"></td>
-        <td width="500" height="500"><img src="{{ url_for('static', filename = filename_2) }}" style="max-height: 500px; max-width: 500px;"></td>
+        <td width="500" height="500"><img src="{{ url_for('static', filename = filename_1) }}"
+                                          style="max-height: 500px; max-width: 500px;"></td>
+        <td width="500" height="500"><img src="{{ url_for('static', filename = filename_2) }}"
+                                          style="max-height: 500px; max-width: 500px;"></td>
     </tr>
     <tr>
-        <td colspan="2">{{ message }} <a href="/">返回</a></td>
+        <td colspan="2">{{ message }} <a href="/">返回</a>
+            <p>注：可信度评分，用于说明这两张脸属于同一人的可能性为多大。</p>
+        </td>
     </tr>
 </table>
 

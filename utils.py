@@ -162,10 +162,7 @@ def get_prob(theta):
     prob_0 = norm.pdf(theta, mu_0, sigma_0)
     prob_1 = norm.pdf(theta, mu_1, sigma_1)
     total = prob_0 + prob_1
-    if prob_0 > prob_1:
-        return prob_0 / total
-    else:
-        return prob_1 / total
+    return prob_1 / total
 
 
 def ensure_folder(folder):
