@@ -25,7 +25,7 @@ def upload_file():
             filename_1 = os.path.join('static', filename_1)
             file1.save(filename_1)
             file2 = request.files['file2']
-            filename_2 = secure_filename(file1.filename)
+            filename_2 = secure_filename(file2.filename)
             filename_2 = os.path.join('static', filename_2)
             file2.save(filename_2)
             theta, is_same = compare(filename_1, filename_2)
