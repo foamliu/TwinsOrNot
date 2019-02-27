@@ -1,6 +1,24 @@
 <html>
 <body>
-{{ message }}
-<a href="/">返回</a>
+<h1>检测结果</h1>
+
+<table border="1">
+    <tr>
+        <td>图片1：</td>
+        <td>图片2：</td>
+    </tr>
+    <tr>
+        <td><img src="{{ url_for(filename = filename_1) }}"></td>
+        <td><img src="{{ url_for(filename = filename_2) }}"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<p>
+    {{ message }}
+    <a href="/">返回</a>
+</p>
 </body>
 </html>

@@ -33,7 +33,7 @@ def upload_file():
             message = '两张照片是否同一个人: {}, 角度: {}, 时间: {} 秒。'.format(is_same, theta, elapsed)
         except FaceNotFoundError as err:
             message = '对不起，[{}] 图片中没有检测到人类的脸。'.format(err)
-        return render_template('show.html', message=message)
+        return render_template('show.html', message=message, filename_1=filename_1, filename_2=filename_2)
 
 
 if __name__ == '__main__':
