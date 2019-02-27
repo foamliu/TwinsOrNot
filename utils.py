@@ -10,7 +10,6 @@ from align_faces import get_reference_facial_points, warp_and_crop_face
 from config import device
 from config import image_h, image_w
 from mtcnn.detector import detect_faces
-from utils import align_face, get_face_all_attributes
 
 data_transforms = {
     'train': transforms.Compose([
@@ -119,7 +118,7 @@ def compare(fn_0, fn_1):
         theta = theta * 180 / math.pi
 
     print('theta: ' + str(theta))
-    return theta < threshold
+    return theta, theta < threshold
 
 
 if __name__ == "__main__":

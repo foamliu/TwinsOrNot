@@ -1,6 +1,7 @@
 # flask_web/app.py
 from flask import Flask
 from flask import render_template, request
+from utils import compare
 
 app = Flask(__name__)
 
@@ -17,7 +18,9 @@ def upload_file():
         file1.save('static/img0.png')
         file2 = request.files['file2']
         file2.save('static/img1.png')
-        return render_template('show.html')
+        theta, is_same = compare('static/img0.png', 'static/img1.png')
+        message = 'theta: {}, are same person: {}'.format(theta, is_same)
+        return render_template('show.html', message=message)
 
 
 if __name__ == '__main__':
