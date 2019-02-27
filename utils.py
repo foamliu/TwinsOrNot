@@ -97,7 +97,7 @@ def select_central_face(im_size, bounding_boxes):
 def get_image(filename):
     has_face, bboxes, landmarks = get_face_all_attributes(filename)
     if not has_face:
-        raise FaceNotFoundError
+        raise FaceNotFoundError(filename)
 
     img = align_face(filename, landmarks)
     img = transforms.ToPILImage()(img)
