@@ -121,6 +121,12 @@ def compare(fn_0, fn_1):
     return theta, theta < threshold
 
 
+def ensure_folder(folder):
+    import os
+    if not os.path.isdir(folder):
+        os.mkdir(folder)
+
+
 if __name__ == "__main__":
     compare('id_card.jpg', 'photo_1.jpg')
     compare('id_card.jpg', 'photo_2.jpg')

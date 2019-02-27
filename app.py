@@ -1,7 +1,7 @@
 # flask_web/app.py
 from flask import Flask
 from flask import render_template, request
-from utils import compare
+from utils import compare, ensure_folder
 
 app = Flask(__name__)
 
@@ -14,6 +14,7 @@ def upload():
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        ensure_folder('static')
         file1 = request.files['file1']
         file1.save('static/img0.png')
         file2 = request.files['file2']
