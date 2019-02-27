@@ -4,6 +4,7 @@ import cv2 as cv
 import numpy as np
 import torch
 from PIL import Image
+from scipy.stats import norm
 from torchvision import transforms
 
 from align_faces import get_reference_facial_points, warp_and_crop_face
@@ -27,12 +28,18 @@ data_transforms = {
 transformer = data_transforms['val']
 
 checkpoint = 'BEST_checkpoint.tar'
+print('loading model: {}...'.format(checkpoint))
 checkpoint = torch.load(checkpoint)
 model = checkpoint['model']
 model = model.to(device)
 model.eval()
 
+# model params
 threshold = 73.18799151798612
+mu_0 = 89.6058
+sigma_0 = 4.5451
+mu_1 = 43.5357
+sigma_1 = 8.83
 
 
 class FaceNotFoundError(Exception):
@@ -151,14 +158,13 @@ def compare(fn_0, fn_1):
 
 
 def get_prob(theta):
-    mu_0 = 89.6058
-    sigma_0 = 4.5451
-    mu_1 = 43.5357
-    sigma_1 = 8.83
-    from scipy.stats import norm
     prob_0 = norm.pdf(theta, mu_0, sigma_0)
     prob_1 = norm.pdf(theta, mu_1, sigma_1)
-    return prob_1 / (prob_0 + prob_1)
+    total = prob_0 + prob_1
+    if prob_0 > prob_1:
+        return prob_0 / total
+    else:
+        return prob_1 / total
 
 
 def ensure_folder(folder):
