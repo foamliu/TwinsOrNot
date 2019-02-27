@@ -138,8 +138,8 @@ def get_prob(theta):
     mu_1 = 43.5357
     sigma_1 = 8.83
     from scipy.stats import norm
-    prob_0 = norm.cdf(theta, mu_0, sigma_0)
-    prob_1 = norm.cdf(theta, mu_1, sigma_1)
+    prob_0 = norm.pdf(theta, mu_0, sigma_0)
+    prob_1 = norm.pdf(theta, mu_1, sigma_1)
     return prob_1/(prob_0 + prob_1)
 
 
