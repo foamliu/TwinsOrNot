@@ -8,8 +8,8 @@
         <td>图片2：</td>
     </tr>
     <tr>
-        <td width="640" height="480"><img src="{{ url_for('static', filename = filename_1) }}"></td>
-        <td width="640" height="480"><img src="{{ url_for('static', filename = filename_2) }}"></td>
+        <td><img src="{{ url_for('static', filename = filename_1) }}" style="max-height: 480px; max-width: 640px;"></td>
+        <td><img src="{{ url_for('static', filename = filename_2) }}" style="max-height: 480px; max-width: 640px;"></td>
     </tr>
     <tr>
         <td></td>
