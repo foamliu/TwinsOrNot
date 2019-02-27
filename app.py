@@ -4,7 +4,7 @@ import os
 from flask import Flask
 from flask import render_template, request
 from werkzeug.utils import secure_filename
-from utils import compare, ensure_folder
+from utils import compare, ensure_folder, FaceNotFoundError
 
 app = Flask(__name__)
 
@@ -31,7 +31,7 @@ def upload_file():
             theta, is_same = compare(filename_1, filename_2)
             elapsed = time.time() - start
             message = '两张照片是否同一个人: {}, 角度: {}, 时间: {} 秒。'.format(is_same, theta, elapsed)
-        except ValueError:
+        except FaceNotFoundError:
             message = '对不起，没有检测到人类的脸'
         return render_template('show.html', message=message)
 

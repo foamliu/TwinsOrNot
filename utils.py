@@ -35,6 +35,11 @@ model.eval()
 threshold = 73.18799151798612
 
 
+class FaceNotFoundError(Exception):
+    """Base class for other exceptions"""
+    pass
+
+
 def align_face(img_fn, facial5points):
     raw = cv.imread(img_fn, True)
     facial5points = np.reshape(facial5points, (2, 5))
@@ -66,7 +71,8 @@ def get_face_all_attributes(full_path):
 
     except KeyboardInterrupt:
         raise
-    except:
+    except Exception as ex:
+        print(ex)
         pass
     return False, None, None
 
@@ -89,7 +95,10 @@ def select_central_face(im_size, bounding_boxes):
 
 
 def get_image(filename):
-    _, _, landmarks = get_face_all_attributes(filename)
+    has_face, bboxes, landmarks = get_face_all_attributes(filename)
+    if not has_face:
+        raise FaceNotFoundError
+
     img = align_face(filename, landmarks)
     img = transforms.ToPILImage()(img)
     img = transformer(img)
