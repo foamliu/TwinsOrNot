@@ -84,6 +84,12 @@ def get_face_all_attributes(full_path):
     return False, None, None
 
 
+def get_all_face_attributes(full_path):
+    img = Image.open(full_path).convert('RGB')
+    bounding_boxes, landmarks = detect_faces(img)
+    return bounding_boxes, landmarks
+
+
 def select_central_face(im_size, bounding_boxes):
     width, height = im_size
     nearest_index = -1
@@ -115,8 +121,8 @@ def draw_bboxes(img, bounding_boxes, facial_landmarks=[]):
 
 
 def get_image(filename):
-    has_face, bboxes, landmarks = get_face_all_attributes(filename)
-    if not has_face:
+    bboxes, landmarks = get_all_face_attributes(filename)
+    if len(bboxes) == 0:
         raise FaceNotFoundError(filename)
 
     img = align_face(filename, landmarks)
