@@ -67,7 +67,7 @@ def align_face(img_fn, facial5points):
     return dst_img
 
 
-def get_face_all_attributes(full_path):
+def get_central_face_attributes(full_path):
     try:
         img = Image.open(full_path).convert('RGB')
         bounding_boxes, landmarks = detect_faces(img)
@@ -78,8 +78,7 @@ def get_face_all_attributes(full_path):
 
     except KeyboardInterrupt:
         raise
-    except Exception as ex:
-        print(ex)
+    except:
         pass
     return False, None, None
 
@@ -121,8 +120,8 @@ def draw_bboxes(img, bounding_boxes, facial_landmarks=[]):
 
 
 def get_image(filename):
-    bboxes, landmarks = get_all_face_attributes(filename)
-    if len(bboxes) == 0:
+    has_face, bboxes, landmarks = get_central_face_attributes(filename)
+    if not has_face:
         raise FaceNotFoundError(filename)
 
     img = align_face(filename, landmarks)
@@ -131,6 +130,7 @@ def get_image(filename):
     img = img.to(device)
 
     print('drawing bboxes: {}'.format(filename))
+    bboxes, landmarks = get_all_face_attributes(filename)
     pic = cv.imread(filename)
     pic = draw_bboxes(pic, bboxes, landmarks)
     cv.imwrite(filename, pic)
