@@ -6,7 +6,7 @@ from flask import Flask
 from flask import render_template, request
 from werkzeug.utils import secure_filename
 
-from utils import compare, ensure_folder, FaceNotFoundError
+from utils import compare, ensure_folder, FaceNotFoundError, resize
 
 app = Flask(__name__, static_url_path="", static_folder="static")
 
@@ -25,10 +25,12 @@ def upload_file():
         filename_1 = secure_filename(file1.filename)
         full_path_1 = os.path.join('static', filename_1)
         file1.save(full_path_1)
+        resize(full_path_1)
         file2 = request.files['file2']
         filename_2 = secure_filename(file2.filename)
         full_path_2 = os.path.join('static', filename_2)
         file2.save(full_path_2)
+        resize(full_path_2)
 
         try:
             prob, is_same = compare(full_path_1, full_path_2)
